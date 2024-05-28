@@ -1,0 +1,15 @@
+button {
+  color: blue;
+  background-color: red;
+}
+
+* {
+  background-color: black;
+  color: white;
+  width: max-content;
+}
+
+#show {
+  padding: 10px;
+  font-size: 20px;
+}
