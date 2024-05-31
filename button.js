@@ -1,15 +1,26 @@
 const btn = document.getElementById("tab")
-const print = document.getElementById("show")
-const tabName = async function getCurrentTab() {
-    let queryOptions = { active: true, lastFocusedWindow: true };
-    // `tab` will either be a `tabs.Tab` instance or `undefined`.
-    let [tab] = await chrome.tabs.query(queryOptions);
+const info = document.getElementById("details");
 
-    print.innerHTML = tab.title;
+const populateDetails = (response, tab) => {
+    info.innerText = `Name: ${response.n},
+    Location: ${response.location},
+    Bio: ${response.bio},
+    About: ${response.about},
+    Followers: ${response.followers},
+    Connections: ${response.connections},
+    URL: ${tab.url}
+     `
 }
 
-btn.addEventListener("click", tabName);
+const tabName = async function getCurrentTab() {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    chrome.tabs.sendMessage(tab.id, { action: 'getDetails' }, response => {
+        populateDetails(response, tab)
+        console.log(tab.url);
 
+    });
+}
+btn.addEventListener("click", tabName);
 
 
 
