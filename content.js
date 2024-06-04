@@ -1,3 +1,4 @@
+// content script runs on the web page the browser visits
 console.log('its content js fiile')
 
 
@@ -17,3 +18,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
+
+// The chrome.runtime.onMessage.addListener function in this code is used to listen for
+// incoming messages from other parts of the extension, such as content scripts.
+
+// This function sets up an event listener for incoming messages.
+// When a message is received, the provided callback function is executed.
+// The callback function receives three parameters:
+// request: Contains the message sent by the sender, typically an object with various properties.
+// sender: Contains information about the sender of the message,
+// such as its identity (extension ID) and the context (tab) it was sent from.
+// sendResponse: A function that can be used to send a response back to the sender of the message.

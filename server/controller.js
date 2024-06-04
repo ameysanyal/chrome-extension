@@ -15,5 +15,9 @@ const createProfile = async (req, res) => {
     res.status(201).json({ data })
 
 };
+// createprofile function adds a new profile record in database 
+// with the ProfileModel using data from  post request body
+// It passes an object containing the extracted data from 
+// the request body to the create() method of the ProfileModel.
 
 module.exports = createProfile;
