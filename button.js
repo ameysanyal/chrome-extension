@@ -5,6 +5,19 @@ const links = ['https://www.linkedin.com/in/akshatshrivastavainsead/',
     'https://www.linkedin.com/in/alakh-pandey-physicswallah-4baaa8227/',
     'https://www.linkedin.com/in/williamhgates/'
 ]
+let likeCountInput = document.getElementById('likeCount')
+let commentCountInput = document.getElementById('commentCount')
+let startBtn = document.getElementById('startButton')
+
+function enableButton() {
+    if (likeCountInput.value && commentCountInput.value) {
+        startBtn.disabled = false
+    }
+    else {
+        startBtn.disabled = true
+    }
+
+}
 
 const populateDetails = (response, tab) => {
     info.innerText = `Name: ${response.n},
@@ -20,6 +33,10 @@ function openTabs() {
     for (i in links)
         window.open(
             links[i], "_blank");
+}
+
+function openFeed() {
+    window.open('https://www.linkedin.com/feed/')
 }
 
 async function getProfileDetails() {
@@ -44,6 +61,25 @@ async function getProfileDetails() {
 }
 btn.addEventListener("click", getProfileDetails);
 openbtn.addEventListener("click", openTabs);
+
+async function startInteracting() {
+    likeCount = likeCountInput.value
+    commentCount = commentCountInput.value
+
+
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    const response = await chrome.tabs.sendMessage(tab.id, { action: 'start', likeCount, commentCount });
+
+    // document.getElementById('print').innerHTML = response.ack
+    console.log(response.ack);
+    console.log(likeCountInput.value)
+    console.log(commentCountInput.value)
+
+}
+likeCountInput.addEventListener('input', enableButton)
+commentCountInput.addEventListener('input', enableButton)
+feed.addEventListener('click', openFeed)
+startBtn.addEventListener('click', startInteracting)
 
 
 // const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
